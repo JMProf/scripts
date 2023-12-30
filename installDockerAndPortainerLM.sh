@@ -4,7 +4,7 @@
 # Instalación de Docker #
 #########################
 
-# Configurar el repositorio
+# Actualizar el repositorio
 
 sudo apt update
 
