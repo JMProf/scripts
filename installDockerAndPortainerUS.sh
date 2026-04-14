@@ -27,7 +27,8 @@ sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 echo "Añadiendo el usuario actual al grupo de Docker..."
-sudo usermod -aG docker $USER
+REAL_USER=${SUDO_USER:-$(logname)}
+sudo usermod -aG docker $REAL_USER
 
 echo "Docker instalado. Esperando 5 segundos para que el servicio se inicie..."
 sleep 5
