@@ -59,6 +59,7 @@ certbot --apache -d $DOMAIN --non-interactive --agree-tos -m $EMAIL --redirect
 echo -e "${GREEN}### 7. Optimizando PHP para Moodle...${NC}"
 sed -i 's/memory_limit = .*/memory_limit = 256M/' /etc/php/*/apache2/php.ini
 sed -i 's/max_execution_time = .*/max_execution_time = 300/' /etc/php/*/apache2/php.ini
+sed -i 's/;max_input_vars = .*/max_input_vars = 5000/' /etc/php/*/apache2/php.ini
 systemctl restart apache2
 
 echo "---------------------------------------------------------"
@@ -70,6 +71,6 @@ echo " Usuario BD: $DB_USER"
 echo " Password BD: $DB_PASS"
 echo " Dir. Datos: $MOODLE_DATA"
 echo "---------------------------------------------------------"
-echo " IMPORTANTE: Cuando termines el asistente web, recuerda revisar"
-echo " que en config.php la URL sea https://$DOMAIN"
+echo " IMPORTANTE: En el asistente web selecciona MariaDB como"
+echo " sistema gesto de bases de datos"
 echo "---------------------------------------------------------"
