@@ -21,22 +21,22 @@ DB_USER="moodleuser"
 MOODLE_DATA="/var/moodledata"
 MOODLE_PATH="/var/www/html/moodle"
 
-echo -e "${GREEN}### 2. Configurando Base de Datos...${NC}"
-mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';"
-mysql -e "FLUSH PRIVILEGES;"
-
-echo -e "${GREEN}### 3. Descargando Moodle (4.5 Stable)...${NC}"
-if [ ! -d "$MOODLE_PATH" ]; then
-    git clone -b MOODLE_405_STABLE https://github.com/moodle/moodle.git "$MOODLE_PATH"
-fi
-
-echo -e "${GREEN}### 4. Ajustando permisos y directorios...${NC}"
+echo -e "${GREEN}### 2. Ajustando permisos y directorios...${NC}"
 mkdir -p "$MOODLE_DATA"
 chown -R www-data:www-data "$MOODLE_DATA"
 chmod -R 770 "$MOODLE_DATA"
 chown -R www-data:www-data "$MOODLE_PATH"
 chmod -R 755 "$MOODLE_PATH"
+
+echo -e "${GREEN}### 3. Configurando Base de Datos...${NC}"
+mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';"
+mysql -e "FLUSH PRIVILEGES;"
+
+echo -e "${GREEN}### 4. Descargando Moodle (4.5 Stable)...${NC}"
+if [ ! -d "$MOODLE_PATH" ]; then
+    git clone -b MOODLE_405_STABLE https://github.com/moodle/moodle.git "$MOODLE_PATH"
+fi
 
 echo -e "${GREEN}### 5. Configurando Apache para acceso directo por IP/Dominio...${NC}"
 sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/moodle|' /etc/apache2/sites-available/000-default.conf
