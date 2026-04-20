@@ -5,7 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 echo -e "${GREEN}### 1. Preparando el sistema e instalando dependencias...${NC}"
-apt update && apt upgrade -y
+apt update
 apt install -y apache2 mariadb-server git certbot python3-certbot-apache \
 php libapache2-mod-php php-iconv php-mysqli php-mbstring php-curl \
 php-gd php-intl php-xml php-soap php-zip php-tokenizer php-ctype
