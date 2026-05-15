@@ -135,8 +135,15 @@ cat <<EOF > /etc/apache2/conf-available/moodle.conf
 EOF
 
 a2enconf moodle
-sed -i 's/memory_limit = .*/memory_limit = 256M/' /etc/php/$PHP_VER/apache2/php.ini
-sed -i 's/;max_input_vars = .*/max_input_vars = 5000/' /etc/php/$PHP_VER/apache2/php.ini
+
+PHPINI="/etc/php/$PHP_VER/apache2/php.ini"
+
+sed -Ei 's/^;*memory_limit\s*=.*/memory_limit = 4G/' "$PHPINI"
+sed -Ei 's/^;*upload_max_filesize\s*=.*/upload_max_filesize = 2G/' "$PHPINI"
+sed -Ei 's/^;*post_max_size\s*=.*/post_max_size = 2G/' "$PHPINI"
+sed -Ei 's/^;*max_execution_time\s*=.*/max_execution_time = 600/' "$PHPINI"
+sed -Ei 's/^;*max_input_time\s*=.*/max_input_time = 600/' "$PHPINI"
+sed -Ei 's/^;*max_input_vars\s*=.*/max_input_vars = 5000/' "$PHPINI"
 
 # Re-aplicar permisos globales
 chown -R www-data:www-data "$MOODLE_PATH"
